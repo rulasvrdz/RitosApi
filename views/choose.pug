@@ -1,0 +1,20 @@
+html
+  head
+    style 
+      include ../styles.css
+    title Bienvenido
+  body
+  p Bienvenido #[b= `${name}`]
+  form(action='/choose')
+  a(href="/me") stats
+    p(class='red')
+      | Que deseas hacer?: 
+      br
+      button(type='submit', formaction="/me") Ver Stats
+      br
+      button(type='submit', formaction="/") Ver Maestria con campeon
+    br
+    br
+    br
+
+    p url usada: #[span= `${url}`]
