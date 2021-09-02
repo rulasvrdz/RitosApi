@@ -3479,3 +3479,14 @@ ul.chat-available-user li a:hover {
 #copyrights a {
   color: #fff;
 }
+
+.h-6{
+    height: 50px;
+}
+
+.mr-2{
+    margin-right: 5px;
+}
+.ml-2{
+    margin-left: 5px;
+}

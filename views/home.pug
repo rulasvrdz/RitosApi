@@ -1,4 +1,22 @@
-include header.pug
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    meta(name='description' content='')
+    meta(name='author' content='Dashboard')
+    meta(name='keyword' content='Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina')
+    title Bienvenido Invocador
+    style 
+      include ../lib/bootstrap/css/bootstrap.min.css
+      include ../css/zabuto_calendar.css
+      include ../lib/gritter/css/jquery.gritter.css
+      include ../css/style.css
+      include ../css/style-responsive.css
+section#container
+  header.header.black-bg
+    a.logo(href='index.html')
+      b
+        span RulasVrdz
 
 section#main-content
     section.wrapper
@@ -8,7 +26,7 @@ section#main-content
             h4.mb
               i.fa.fa-angle-right
               |  Bienvenido
-            form.form-horizontal.style-form(action='/me',method='get')
+            form.form-horizontal.style-form(action='/me',method='post')
               .form-group
                 label.col-sm-2.col-sm-2.control-label Nombre de invocador:
                 .col-sm-8

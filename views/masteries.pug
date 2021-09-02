@@ -1,0 +1,27 @@
+include header.pug
+
+section#main-content
+  section.wrapper.site-min-height
+    .row.mt
+      .col-lg-12
+        .row.content-panel
+            each champ, index in champs
+                .col-md-3.centered
+                    .profile-pic
+                        a(href='/mastery?champId='+champ.key+'&champ='+champ.id)
+                            p
+                                img.img-circle(src='http://ddragon.leagueoflegends.com/cdn/' + version + '/img/champion/' + champ.id + '.png')
+                            h3=champ.id
+
+
+
+footer.site-footer
+  .text-center
+    p Url usada: 
+    p Info: #[b= `${url}`]
+
+    .credits
+      | Created with Dashio template by 
+      a(href='https://templatemag.com/') TemplateMag
+
+include footer.pug

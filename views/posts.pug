@@ -1,0 +1,104 @@
+include header.pug
+
+section#main-content
+    section.wrapper
+      .row.mt
+        .col-lg-12
+          .form-panel
+            h4.mb
+              i
+              |  Masters
+            form.form-horizontal.style-form(action='/masters',method='post')
+              .form-group
+                label.col-sm-2.col-sm-2.control-label Cola Clasificatoria:
+                button.btn.btn-theme.mr-2(type='submit', value='RANKED_SOLO_5x5', name="queue") Solo Q
+                button.btn.btn-theme.mr-2(type='submit', value='RANKED_FLEX_SR', name="queue") Flex
+      .row.mt
+        .col-lg-12
+          .form-panel
+            h4.mb
+              i
+              |  GrandMasters
+            form.form-horizontal.style-form(action='/grandmasters',method='post')
+              .form-group
+                label.col-sm-2.col-sm-2.control-label Cola Clasificatoria:
+                button.btn.btn-theme.mr-2(type='submit', value='RANKED_SOLO_5x5', name="queue") Solo Q
+                button.btn.btn-theme.mr-2(type='submit', value='RANKED_FLEX_SR', name="queue") Flex
+      .row.mt
+        .col-lg-12
+          .form-panel
+            h4.mb
+              i
+              |  Por Liga
+            form.form-horizontal.style-form(action='/leagues',method='post')
+              .form-group
+                label.col-sm-2.col-sm-2.control-label Division:
+                input#html(type='radio' name='division' value='I')
+                label.mr-2.ml-2(for='I') I
+                input#html(type='radio' name='division' value='II')
+                label.mr-2.ml-2(for='II') II
+                input#html(type='radio' name='division' value='III')
+                label.mr-2.ml-2(for='III') III
+                input#html(type='radio' name='division' value='IV')
+                label.mr-2.ml-2(for='IV') IV
+
+              .form-group
+                label.col-sm-2.col-sm-2.control-label Liga:
+                input#html(type='radio' name='tier' value='DIAMOND')
+                label.mr-2.ml-2(for='DIAMOND') DIAMOND
+                input#html(type='radio' name='tier' value='PLATINUM')
+                label.mr-2.ml-2(for='PLATINUM') PLATINUM
+                input#html(type='radio' name='tier' value='GOLD')
+                label.mr-2.ml-2(for='GOLD') GOLD
+                input#html(type='radio' name='tier' value='SILVER')
+                label.mr-2.ml-2(for='SILVER') SILVER
+                input#html(type='radio' name='tier' value='BRONZE')
+                label.mr-2.ml-2(for='BRONZE') BRONZE
+                input#html(type='radio' name='tier' value='IRON')
+                label.mr-2.ml-2(for='IRON') IRON
+
+                
+              .form-group
+                label.col-sm-2.col-sm-2.control-label Cola Clasificatoria:    
+                button.btn.btn-theme.mr-2(type='submit', value='RANKED_SOLO_5x5', name="queue") Solo Q
+                button.btn.btn-theme.mr-2(type='submit', value='RANKED_FLEX_SR', name="queue") Flex
+      .row.mt
+        .col-lg-12
+          .form-panel
+            h4.mb
+              i
+              |  Por Experiencia
+            form.form-horizontal.style-form(action='/exp',method='post')
+              .form-group
+                label.col-sm-2.col-sm-2.control-label Division:
+                input#html(type='radio' name='division' value='I')
+                label.mr-2.ml-2(for='I') I
+                input#html(type='radio' name='division' value='II')
+                label.mr-2.ml-2(for='II') II
+                input#html(type='radio' name='division' value='III')
+                label.mr-2.ml-2(for='III') III
+                input#html(type='radio' name='division' value='IV')
+                label.mr-2.ml-2(for='IV') IV
+
+              .form-group
+                label.col-sm-2.col-sm-2.control-label Liga:
+                input#html(type='radio' name='tier' value='PLATINUM')
+                label.mr-2.ml-2(for='PLATINUM') PLATINUM
+                input#html(type='radio' name='tier' value='GOLD')
+                label.mr-2.ml-2(for='GOLD') GOLD
+                input#html(type='radio' name='tier' value='SILVER')
+                label.mr-2.ml-2(for='SILVER') SILVER
+                input#html(type='radio' name='tier' value='BRONZE')
+                label.mr-2.ml-2(for='BRONZE') BRONZE
+                input#html(type='radio' name='tier' value='IRON')
+                label.mr-2.ml-2(for='IRON') IRON
+
+                
+              .form-group
+                label.col-sm-2.col-sm-2.control-label Cola Clasificatoria:    
+                button.btn.btn-theme.mr-2(type='submit', value='RANKED_SOLO_5x5', name="queue") Solo Q
+                button.btn.btn-theme.mr-2(type='submit', value='RANKED_FLEX_SR', name="queue") Flex
+
+
+include footer.pug
+    

@@ -1,0 +1,55 @@
+include header.pug
+
+section#main-content
+  section.wrapper.site-min-height
+    h3=name
+    each user in users
+        .row.mt
+            .col-lg-12
+                .row.content-panel
+                    .col-md-6.centered
+                        .profile-pic
+                            p
+                            h3=user.summonerName
+                            h4 Division: #[span= `${user.rank}`]
+                            p
+                    .col-md-5.detailed
+                        h4 Estadisticas
+                        .row.centered.mt.mb
+                            .col-sm-4
+                                h1
+                                i.fa
+                                    svg.h-6.w-6(xmlns='http://www.w3.org/2000/svg' fill='none' viewbox='0 0 24 24' stroke='currentColor')
+                                        path(stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7')
+
+                                h3=user.wins
+                                h6 VICTORIAS
+                            .col-sm-4
+                                h1
+                                i.fa
+                                    svg.h-6.w-6(xmlns='http://www.w3.org/2000/svg' fill='none' viewbox='0 0 24 24' stroke='currentColor')
+                                        path(stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 18L18 6M6 6l12 12')
+
+                                h3=user.losses
+                                h6 DERROTAS
+                            .col-sm-4
+                                h1
+                                i.fa
+                                    svg.h-6.w-6(xmlns='http://www.w3.org/2000/svg' fill='none' viewbox='0 0 24 24' stroke='currentColor')
+                                        path(stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z')
+
+
+                                h3=user.leaguePoints
+                                h6 PUNTOS
+
+
+footer.site-footer
+  .text-center
+    p Url usada: 
+    p Info: #[b= `${url}`]
+
+    .credits
+      | Created with Dashio template by 
+      a(href='https://templatemag.com/') TemplateMag
+
+include footer.pug

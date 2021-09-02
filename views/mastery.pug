@@ -9,9 +9,10 @@ section#main-content
           .col-md-4.centered
             .profile-pic
               p
-                img.img-circle(src= icon)
-              h3= name
-              p Nivel: #[b= `${level}`]
+                img.img-circle(src='http://ddragon.leagueoflegends.com/cdn/' + version + '/img/champion/' + champ + '.png')
+              h3= champ
+              p Maestria: #[b= `${level}`]
+              p Puntos: #[b= `${points}`]
 
 footer.site-footer
   .text-center

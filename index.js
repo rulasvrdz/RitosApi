@@ -1,45 +1,27 @@
-// const express = require("express");
-// const app = express();
-// const path = require("path");
-// const router = express.Router();
-
-
-// app.set("view engine", "pug");
-// app.set("views", path.join(__dirname, "views"));
-
-// router.get("/", (req, res) => {
-//   res.render("index");
-// });
-
-// router.get("/about", (req, res) => {
-//   res.render("about", { title: "Hey", message: "Hello there!" });
-// });
-
-// app.use("/", router);
-// app.listen(process.env.port || 8080);
-
-// console.log("Running at Port 8080");
-
-// app.post('/summoner', (req, res)=>{ 
-//     var myText = req.body; //mytext is the name of your input box
-//     res.send('Your Text:' + myText); 
-// }); 
-
 var express = require('express'); 
 var app = express(); 
 const path = require("path");
-const axios = require('axios')
+const axios = require('axios');
+const { render } = require('pug');
 const URL = 'https://la1.api.riotgames.com'
 const V = 'https://ddragon.leagueoflegends.com/realms/na.json'
-const AUTH = '?api_key=RGAPI-40dc18be-d680-492f-87d4-7dff44064222'
+const ApiKey = 'RGAPI-502c1fd5-c746-42e3-afa3-fa1be7c61075'
+const AUTH = '?api_key=' + ApiKey
 
 
 let name
 let id
 let version
+let icon
+let iconURL 
+let account
 
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
+
+app.use(express.urlencoded({
+  extended: true
+}))
 
 app.get("/", (req, res) => {
   res.render("home");
@@ -47,21 +29,21 @@ app.get("/", (req, res) => {
 
 axios.get(V)
   .then((response) => {
-    v=response.data.v
-    console.log(v);
-    res.send(response.data)
-
+    version=response.data.v
 })
 
 
-app.get("/me", function (req, response){
-  var resp = req.query.me;
+app.post("/me", function (req, response){
+  var resp = req.body.me;
   if (resp != "") {
     axios.get(URL + '/lol/summoner/v4/summoners/by-name/' + resp + AUTH)
         .then((res) => {
-          console.log(res.data)
+          account = res.data.accountId
+          id = res.data.id
           name = res.data.name
-          response.render("profile", {name: name, level: res.data.summonerLevel, icon: res.data.profileIconId, url: URL + '/lol/summoner/v4/summoners/by-name/' + name + AUTH});
+          icon = res.data.profileIconId
+          iconURL = 'http://ddragon.leagueoflegends.com/cdn/' + version + '/img/profileicon/' + icon + '.png'
+          response.render("profile", {name: name, level: res.data.summonerLevel, icon: iconURL, url: URL + '/lol/summoner/v4/summoners/by-name/' + name + AUTH});
         })
     
   } else {
@@ -69,7 +51,90 @@ app.get("/me", function (req, response){
   }
 });
 
-app.get("/me", function (req, res){
-  res.render("summoner");
+app.get("/masteries", function (req, response){
+  var resp = req.query.champ;
+    axios.get('http://ddragon.leagueoflegends.com/cdn/' + version + '/data/en_US/champion.json')
+        .then((res) => {
+          response.render("masteries", {name: name, champs: res.data.data, version: version ,url: 'http://ddragon.leagueoflegends.com/cdn/' + version + '/data/en_US/champion.json'});
+        })
 });
+
+app.get("/mastery", function (req, response){
+  var resp = req.query.champId;
+  var champ = req.query.champ;
+    axios.get(URL + '/lol/champion-mastery/v4/champion-masteries/by-summoner/' + id + '/by-champion/' + resp + AUTH)
+        .then((res) => {
+          response.render("mastery", {level: res.data.championLevel, champ:champ, version: version, points: res.data.championPoints, URL: URL + '/lol/champion-mastery/v4/champion-masteries/by-summoner/' + id + '/by-champion/' + resp + AUTH});
+        })
+});
+
+app.get("/rank", function (req, response){
+    axios.get(URL + '/lol/league/v4/entries/by-summoner/' + id + AUTH)
+        .then((res) => {
+          response.render("rank", {name: name, tier: res.data[0].tier, rank: res.data[0].rank, points: res.data[0].leaguePoints, wins:res.data[0].wins, losses: res.data[0].losses, icon: iconURL, url:URL + '/lol/league/v4/entries/by-summoner/' + id + AUTH});
+        })
+});
+
+app.get("/challengers", function (req, response){
+  axios.get(URL + '/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5' + AUTH)
+      .then((res) => {
+        r=res.data
+        response.render("challengers", {name:r.name, users: r.entries, version:version, url:URL + '/lol/league/v4/entries/by-summoner/' + id + AUTH});
+      })
+});
+
+app.get("/matches", function (req, response){
+  axios.get(URL + '/lol/match/v4/matchlists/by-account/' + account + AUTH)
+      .then((res) => {
+        r=res.data
+        response.render("match", {name:r.name, matches: r.matches, version:version, url:URL + '/lol/league/v4/entries/by-summoner/' + id + AUTH});
+      })
+});
+
+app.get("/posts", function (req, response){
+  response.render("posts")
+});
+
+app.post("/masters", function (req, response){
+  const queue = req.body.queue
+  axios.get(URL + '/lol/league/v4/masterleagues/by-queue/' + queue + AUTH)
+      .then((res) => {
+        r=res.data
+        response.render("challengers", {name:r.name, users: r.entries, version:version, url:URL + '/lol/league/v4/entries/by-summoner/' + id + AUTH});
+      })
+  // response.end()
+});
+
+app.post("/grandmasters", function (req, response){
+  const queue = req.body.queue
+  axios.get(URL + '/lol/league/v4/grandmasterleagues/by-queue/' + queue + AUTH)
+      .then((res) => {
+        r=res.data
+        response.render("challengers", {name:r.name, users: r.entries, version:version, url:URL + '/lol/league/v4/entries/by-summoner/' + id + AUTH});
+      })
+  // response.end()
+});
+
+app.post("/leagues", function (req, response){
+  const queue = req.body.queue
+  const tier = req.body.tier
+  const division = req.body.division
+  axios.get(URL + '/lol/league/v4/entries/' + queue +'/' + tier + '/' + division + AUTH)
+      .then((res) => {
+        r=res.data
+        response.render("leagues", {queue:queue, users: r, version:version, url:URL + '/lol/league/v4/entries/by-summoner/' + id + AUTH});
+      })
+});
+
+app.post("/exp", function (req, response){
+  const queue = req.body.queue
+  const tier = req.body.tier
+  const division = req.body.division
+  axios.get(URL + '/lol/league-exp/v4/entries/' + queue +'/' + tier + '/' + division + AUTH)
+      .then((res) => {
+        r=res.data
+        response.render("leagues", {queue:queue, users: r, version:version, url:URL + '/lol/league/v4/entries/by-summoner/' + id + AUTH});
+      })
+});
+
 app.listen(8080)
