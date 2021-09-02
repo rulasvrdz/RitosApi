@@ -45,9 +45,12 @@ app.post("/me", function (req, response){
           iconURL = 'http://ddragon.leagueoflegends.com/cdn/' + version + '/img/profileicon/' + icon + '.png'
           response.render("profile", {name: name, level: res.data.summonerLevel, icon: iconURL, url: URL + '/lol/summoner/v4/summoners/by-name/' + name + AUTH});
         })
+        .catch( (error) =>{
+          response.render("errors", {code: error.response.status, text: error.response.statusText});
+        })
     
   } else {
-      response.send("Please provide us first name");
+    response.render("errors", {code: "No User", text: "Ingresa un nombre de usuario"});
   }
 });
 
@@ -56,6 +59,10 @@ app.get("/masteries", function (req, response){
     axios.get('http://ddragon.leagueoflegends.com/cdn/' + version + '/data/en_US/champion.json')
         .then((res) => {
           response.render("masteries", {name: name, champs: res.data.data, version: version ,url: 'http://ddragon.leagueoflegends.com/cdn/' + version + '/data/en_US/champion.json'});
+        })
+        .catch( (error) =>{
+          response.render("errors", {code: error.response.status, text: error.response.statusText});
+        
         })
 });
 
@@ -66,12 +73,20 @@ app.get("/mastery", function (req, response){
         .then((res) => {
           response.render("mastery", {level: res.data.championLevel, champ:champ, version: version, points: res.data.championPoints, URL: URL + '/lol/champion-mastery/v4/champion-masteries/by-summoner/' + id + '/by-champion/' + resp + AUTH});
         })
+        .catch( (error) =>{
+          response.render("errors", {code: error.response.status, text: error.response.statusText});
+        
+        })
 });
 
 app.get("/rank", function (req, response){
     axios.get(URL + '/lol/league/v4/entries/by-summoner/' + id + AUTH)
         .then((res) => {
           response.render("rank", {name: name, tier: res.data[0].tier, rank: res.data[0].rank, points: res.data[0].leaguePoints, wins:res.data[0].wins, losses: res.data[0].losses, icon: iconURL, url:URL + '/lol/league/v4/entries/by-summoner/' + id + AUTH});
+        })
+        .catch( (error) =>{
+          response.render("errors", {code: error.response.status, text: error.response.statusText});
+        
         })
 });
 
@@ -81,6 +96,10 @@ app.get("/challengers", function (req, response){
         r=res.data
         response.render("challengers", {name:r.name, users: r.entries, version:version, url:URL + '/lol/league/v4/entries/by-summoner/' + id + AUTH});
       })
+      .catch( (error) =>{
+        response.render("errors", {code: error.response.status, text: error.response.statusText});
+      
+      })
 });
 
 app.get("/matches", function (req, response){
@@ -88,6 +107,10 @@ app.get("/matches", function (req, response){
       .then((res) => {
         r=res.data
         response.render("match", {name:r.name, matches: r.matches, version:version, url:URL + '/lol/league/v4/entries/by-summoner/' + id + AUTH});
+      })
+      .catch( (error) =>{
+        response.render("errors", {code: error.response.status, text: error.response.statusText});
+      
       })
 });
 
@@ -102,6 +125,10 @@ app.post("/masters", function (req, response){
         r=res.data
         response.render("challengers", {name:r.name, users: r.entries, version:version, url:URL + '/lol/league/v4/entries/by-summoner/' + id + AUTH});
       })
+      .catch( (error) =>{
+        response.render("errors", {code: error.response.status, text: error.response.statusText});
+      
+      })
   // response.end()
 });
 
@@ -111,6 +138,10 @@ app.post("/grandmasters", function (req, response){
       .then((res) => {
         r=res.data
         response.render("challengers", {name:r.name, users: r.entries, version:version, url:URL + '/lol/league/v4/entries/by-summoner/' + id + AUTH});
+      })
+      .catch( (error) =>{
+        response.render("errors", {code: error.response.status, text: error.response.statusText});
+      
       })
   // response.end()
 });
@@ -124,6 +155,10 @@ app.post("/leagues", function (req, response){
         r=res.data
         response.render("leagues", {queue:queue, users: r, version:version, url:URL + '/lol/league/v4/entries/by-summoner/' + id + AUTH});
       })
+      .catch( (error) =>{
+        response.render("errors", {code: error.response.status, text: error.response.statusText});
+      
+      })
 });
 
 app.post("/exp", function (req, response){
@@ -134,6 +169,10 @@ app.post("/exp", function (req, response){
       .then((res) => {
         r=res.data
         response.render("leagues", {queue:queue, users: r, version:version, url:URL + '/lol/league/v4/entries/by-summoner/' + id + AUTH});
+      })
+      .catch( (error) =>{
+        response.render("errors", {code: error.response.status, text: error.response.statusText});
+      
       })
 });
 

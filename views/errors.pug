@@ -8,6 +8,7 @@ html
     title Bienvenido Invocador
     style 
       include ../lib/bootstrap/css/bootstrap.min.css
+      include ../lib/font-awesome/css/font-awesome.css
       include ../css/zabuto_calendar.css
       include ../lib/gritter/css/jquery.gritter.css
       include ../css/style.css
@@ -17,21 +18,30 @@ section#container
     a.logo(href='/')
       b
         span RulasVrdz
+    #top_menu.nav.notify-row
+      ul.nav.top-menu
+        li.dropdown
+          a.dropdown-toggle(href='/')
+            | Inicio
 
 section#main-content
-    section.wrapper
-      .row.mt
-        .col-lg-12
-          .form-panel
-            h4.mb
-              i.fa.fa-angle-right
-              |  Bienvenido
-            form.form-horizontal.style-form(action='/me',method='post')
-              .form-group
-                label.col-sm-2.col-sm-2.control-label Nombre de invocador:
-                .col-sm-8
-                  input.form-control(type='text', name='me')
-                button.btn.btn-theme(type='submit', value='Submit') Entrar
+  section.wrapper.site-min-height
+    .row.mt
+      .col-lg-12
+        .row.content-panel
+          .col-md-4.profile-text
+          .col-md-4.centered
+            .profile-pic
+              h3 Error: #[b= `${code}`]
+              p  #[b= `${text}`]
+
+footer.site-footer
+  .text-center
+    p Url usada: 
+    p Info: #[b= `${url}`]
+
+    .credits
+      | Created with Dashio template by 
+      a(href='https://templatemag.com/') TemplateMag
 
 include footer.pug
-    
