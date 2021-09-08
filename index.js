@@ -5,9 +5,12 @@ const axios = require('axios');
 const { render } = require('pug');
 const URL = 'https://la1.api.riotgames.com'
 const V = 'https://ddragon.leagueoflegends.com/realms/na.json'
-const ApiKey = 'RGAPI-502c1fd5-c746-42e3-afa3-fa1be7c61075'
+const ApiKey = 'RGAPI-21fd069d-e93f-4342-b1e7-cb8d9faacf34'
 const AUTH = '?api_key=' + ApiKey
 
+let port = process.env.PORT || 8080
+
+console.log("Server is running in port: " + port)
 
 let name
 let id
@@ -176,4 +179,4 @@ app.post("/exp", function (req, response){
       })
 });
 
-app.listen(8080)
+app.listen(port)
