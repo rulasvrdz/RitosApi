@@ -10,7 +10,7 @@ const AUTH = '?api_key=' + ApiKey
 
 let port = process.env.PORT || 8080
 
-console.log("Server is running in port: " + port)
+console.log("Server is running in port : " + port)
 
 let name
 let id
